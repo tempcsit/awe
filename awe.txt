@@ -1,0 +1,803 @@
+1.HELLO WORLD
+ex.js
+function Hello()
+{
+    return(
+            <div>
+            <h1>Hello world</h1>
+            </div>
+        );
+}
+export default Hello;
+Index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import Hello from './ex';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Hello />
+  </React.StrictMode>
+);
+reportWebVitals();
+
+
+
+
+2.CURRENT DATE AND TIME
+Index.js
+import reportWebVitals from './reportWebVitals';
+function timer()
+{
+  var ob = new Date();
+  var d = ob.toDateString();
+  var t = ob.toTimeString();
+  var element =
+  <>
+   <h1> Date:{d}</h1>
+   <h1> Time:{t}</h1>
+  </>
+  root.render(element);
+}
+setInterval(timer,1000);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
+
+
+
+
+
+
+3a.FUNCTIONAL COMPONENT
+Fc.js
+import React from "react";
+function FC(props)
+{
+    return(
+        <div>
+            <h1>{props.data}</h1>
+        </div>
+    )
+}
+export default FC;
+Index.js
+import reportWebVitals from './reportWebVitals';
+ var name = "xyz";
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <FC data = {name} />
+
+  </React.StrictMode>
+);
+3b.CLASS COMPONENT
+import { Component } from "react";
+class App1 extends Component
+{
+    constructor()
+    {
+        super();
+        this.state = {
+            data : [{"name":"abc"},{"name":"xyz"}]
+        }
+    }
+    render(){
+        return(
+            <div>
+                <StudentName />
+                <ul>
+                {this.state.data.map((item, index) => (<List key={index} data={item} />))}
+                </ul>
+            </div>
+        );
+    }
+}
+
+class StudentName extends Component
+{
+    render(){
+        return(
+            <div>
+                <h1>Student Name</h1>
+            </div> );
+    }
+}
+class List extends Component
+{
+    render()
+    {
+        return(
+            <div>
+                <ul>
+                  <li> {this.props.data.name} </li> 
+                </ul>
+            </div>
+        );
+    }
+}
+export default App1;
+
+
+
+
+
+
+
+
+
+4.DATE IN CLASS COMPONENT
+Datedisplay.js
+import { Component } from "react";
+
+class DateDisplay extends Component
+{
+    constructor(props)
+    {
+        super(props);
+        this.state = { date:props.d};
+    }
+    render()
+    {
+        return(
+            <div>
+                <h1>Date Display</h1>
+                <p>current date:{this.state.date}</p>
+
+            </div>
+        );
+    }
+}
+export default DateDisplay;
+Index.js
+import DateDisplay from './Datedisplay';
+const date = "2024-27-10"
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+ 
+    <DateDisplay d = {date}/>
+
+  </React.StrictMode>
+);
+
+
+
+
+
+
+
+
+5.LIFE CYCLE METHODS
+import { Component } from "react";
+class LifeCycle extends Component{
+    constructor(props){
+        super(props);
+        this.state = {count:0}
+    }
+    stategetDerivedStatefromProps(props,state){
+        console.log("This is the getDerived state from props");
+        return null;
+    }
+    componentDidMount(){
+        console.log("this is component did mount");
+    }
+    shouldComponentUpdate(){
+        console.log("this is should component update");
+        return true;
+    }
+    getSnapshotBeforeUpdate(prevProps,prevState){
+        console.log("this is get snap shot before update");
+        console.log("Before update count",prevState);
+        return null;
+    }
+    componentDidUpdate(prevProps,prevState){
+        console.log("Component did update");
+        console.log("After update count",this.state.count);
+    }
+    increment =()=>{
+        this.setState((prevState)=>(
+            {count:prevState.count+1}
+        ));
+    }
+    decrement =()=>{
+        this.setState((prevState)=>(
+            {count:prevState.count-1}
+        ));
+    }
+    render(){
+        return (<div>
+            <h1>Current Count:{this.state.count}</h1>
+            <button onClick={this.increment}>Increase</button>
+            <button onClick={this.decrement}>Decrease</button>
+            
+        </div>
+        )
+    }
+
+}
+export default LifeCycle;
+
+
+
+
+
+
+
+
+
+6.EVENT LISTENER
+import {Component} from 'react'
+class Button extends Component{
+    constructor(props){
+        super(props);
+        this.state = {msg:"Lets get Started"};
+    }
+    handleDateClick(){
+        this.setState({msg:new Date().toString()});
+    }
+    handleGoodByeClick(){
+        this.setState({msg:"Good Bye"});
+    }
+    render(){
+        return (
+            <div>
+                <h1>{this.state.msg}</h1>
+                <button onClick={this.handleDateClick.bind(this)}>Show Date and Time</button>
+                <button onClick={this.handleGoodByeClick.bind(this)}>Say Bye</button>
+                
+            </div>
+        )
+    }
+}
+export default  Button;
+
+
+
+
+
+7.CALCULATOR
+import React,{useState} from 'react';
+import './Calc.css'
+const Calc = () => {
+    const [input,setIntput]=useState('');
+    const [result, setResult] = useState('');
+    const handleClick=(val)=>{
+        if(val==='='){
+            setResult(eval(input));
+        }
+        else if(val==='C'){
+            setIntput('');
+            setResult('');
+        }
+        else if(val==='X'){
+            setIntput(input.slice(0,-1));
+        }
+        else{
+            setIntput(input+val);
+        }
+    }
+
+
+
+
+
+
+
+
+
+    return (
+        <div className="calc">
+            <div className="container">
+                <div className="input"> {input}</div>
+                <div className="result">{result}</div>
+            </div>
+            <div className="button">
+                {['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+', 'C', 'X'].map((val) => (
+                    <button key={val} onClick={() => handleClick(val)}>{val}</button>
+                ))}
+            </div>
+        </div>
+    );
+}
+export default Calc;
+
+
+
+
+
+
+8.REGISTRATION PAGE
+import { useState } from "react"
+import './reg.css'
+
+const Regform = () =>{
+    const[formData,SetFormData] = useState({
+        username : '',
+        email : '',
+        password : '',
+        phone : '',
+        gender : '',
+    });
+    const handleChange =(e) =>{
+        const{name,value} = e.target;
+        SetFormData({
+            ...formData,
+            [name]:value
+        });
+    }
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        console.log("Form Data submitted:",formData);
+    }
+    return(
+        <div align = 'center'>
+            <h1>Registration form</h1>
+
+            <form onSubmit={handleSubmit}>
+            <div>
+                <label htmlFor="username">user name:</label>
+                <input type="text" id="username" name="username" value={formData.usesrname} onChange={handleChange} />
+            </div>
+
+            <div>
+                <label htmlFor="email">email:</label>
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required/>
+            </div>
+
+            <div>
+                <label htmlFor="password">password:</label>
+                <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required/>
+            </div>
+            <div>
+                <label htmlFor="phone">phone number:</label>
+                <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required/>
+            </div>
+            <div>
+                <label>Gender:</label>
+            
+            <select id="gender" name="gender" value={formData.gender} onChange={handleChange} required >
+            <option value=" ">select gender</option>
+            <option value="male">male</option>
+            <option value="female">female</option>
+            </select>
+            </div>
+
+            <button type="submit" >REGISTER</button>
+            </form>
+
+        </div>
+    )
+}
+export default Regform;
+
+
+
+
+
+
+
+
+11.WEATHER APP
+WeatherService.js
+import axios from 'axios';
+
+const API_KEY = 'd09c179e61f7657174057032d4532734';
+const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+
+// Function to fetch current weather data
+export const getWeatherData = async (city) => {
+    try {
+    const response = await axios.get(`${BASE_URL}/weather`, {
+        params: {
+        q: city,
+        appid: API_KEY,
+        },
+    });
+    return response.data;
+    } catch (error) {
+    console.error('Error fetching weather data:', error);
+    if (error.response && error.response.status === 401) {
+        alert('Unauthorized: Invalid API Key');
+    }
+    return null;
+    }
+};
+
+WeatherApp.js
+We have to install axios for this npm i axios
+import React, { useState, useEffect } from 'react';
+import { getWeatherData } from './WeatherService';
+
+const WeatherApp = () => {
+    const [currentWeather, setCurrentWeather] = useState(null);
+  const [city, setCity] = useState('');  // Initialize city with empty string
+  const [inputCity, setInputCity] = useState('New York'); // Default city input
+
+    useEffect(() => {
+    const fetchWeather = async () => {
+        const current = await getWeatherData(inputCity);
+        setCurrentWeather(current);
+    };
+    
+    fetchWeather();
+    }, [inputCity]);
+
+  // Handler for city input change
+    const handleCityChange = (e) => {
+    setCity(e.target.value);
+    };
+
+  // Handler for form submission
+    const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setInputCity(city); // Update the inputCity state to trigger a new fetch
+    };
+
+
+
+    return (
+    <div>
+    <h1>Weather App</h1>
+    
+    {/* Input form for city name */}
+    <form onSubmit={handleFormSubmit}>
+        <input 
+        type="text" 
+        value={city} 
+        onChange={handleCityChange} 
+        placeholder="Enter city" 
+        />
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {currentWeather && (
+        <div>
+            <h2>Current Weather in {currentWeather.name}</h2>
+            <p>Temperature: {(currentWeather.main.temp - 273.15).toFixed(2)} °C</p>
+            <p>Weather: {currentWeather.weather[0].description}</p>
+        </div>
+    )}
+    </div>
+    );
+};
+
+export default WeatherApp;
+
+
+
+
+
+
+
+12.TODO
+App.js
+import React, { useState } from 'react';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
+
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = (task) => {
+    const newTodo = { id: Date.now(), task, completed: false };
+    setTodos([...todos, newTodo]);
+  };
+
+  const toggleComplete = (id) => {
+    setTodos(todos.map(todo => (
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    )));
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
+  return (
+    <div className="App">
+      <h1>TODO App</h1>
+      <TodoForm addTodo={addTodo} />
+      <TodoList todos={todos} toggleComplete={toggleComplete} deleteTodo={deleteTodo} />
+    </div>
+  );
+}
+
+export default App;
+
+TodoForm.js
+import React, { useState } from 'react';
+
+function TodoForm({ addTodo }) {
+  const [task, setTask] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (task.trim()) {
+      addTodo(task);
+      setTask('');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+        placeholder="Add new task"
+      />
+      <button type="submit">Add Task</button>
+    </form>
+  );
+}
+
+export default TodoForm;
+TodoList.js
+import React from 'react';
+
+function TodoList({ todos, toggleComplete, deleteTodo }) {
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+          {todo.task}
+          <button onClick={() => toggleComplete(todo.id)}>
+            {todo.completed ? 'Undo' : 'Complete'}
+          </button>
+          <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default TodoList;
+
+
+
+
+
+
+
+
+
+
+9&10.BOOK STORE
+App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home';
+import Product from './Product';
+import Checkout from './Checkout';
+import Cart from './Cart';
+import Header from './Header'; // Import the Header component
+
+const App = () => {
+  return (
+    <Router>
+      <Header /> 
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="product/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
+
+Home.js
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Home.css'; // Import the CSS file
+
+const Home = () => {
+  const books = [
+    { 
+      id: 1, 
+      title: 'The Great Gatsby', 
+      description: 'A classic novel by F. Scott Fitzgerald.',
+      imageUrl: 'pic3.jpg' // Path relative to the public folder
+    },
+    { 
+      id: 2, 
+      title: 'A Silent Valley', 
+      description: 'A dystopian novel by George Orwell.',
+      imageUrl: 'pic2.jpg' // Path relative to the public folder
+    },
+    { 
+      id: 3, 
+      title: 'To Kill a Mockingbird', 
+      description: 'A novel by Harper Lee.',
+      imageUrl: 'pic1.webp' // Path relative to the public folder
+    },
+  ];
+
+  return (
+    <div>
+      <h1>Book Store</h1>
+      <div className="card-container">
+        {books.map((book) => (
+          <div className="card" key={book.id}>
+            <Link to={`/product/${book.id}`}>
+              <img 
+                src={book.imageUrl} 
+                alt={book.title} 
+              />
+              <div className="card-content">
+                <h2 className="card-title">{book.title}</h2>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+export default Home;
+
+Product.js
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import './Product.css'; // Import the CSS file
+
+const Product = () => {
+  const { id } = useParams();
+  const books = [
+    { 
+      id: 1, 
+      title: 'The Great Gatsby', 
+      description: 'A classic novel by F. Scott Fitzgerald where he explore',
+      imageUrl: 'pic3.jpg'
+    },
+    { 
+      id: 2, 
+      title: 'A Silent Valley', 
+      description: 'A dystopian novel by George Orwell where the prota',
+      imageUrl: 'pic2.jpg'
+    },
+    { 
+      id: 3, 
+      title: 'To Kill a Mockingbird', 
+      description: 'A novel by Harper Lee where the hero pursues a vi',
+      imageUrl: 'pic1.webp'
+    },
+  ];
+
+  // Find the book based on the ID from the URL
+  const book = books.find((b) => b.id === parseInt(id));
+
+  if (!book) {
+    return <div>Book not found</div>;
+  }
+
+  const handleAddToCart = () => {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingItem = cart.find((item) => item.id === book.id);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ ...book, quantity: 1 });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
+
+  return (
+    <div className="card-container">
+      <div className="card">
+        <img 
+          src={`${process.env.PUBLIC_URL}/${book.imageUrl}`} 
+          alt={book.title} 
+        />
+        <h1>{book.title}</h1>
+        <p>{book.description}</p>
+        <button onClick={handleAddToCart}>Add to Cart</button>
+      </div>
+    </div>
+  );
+};
+export default Product;
+ Cart.js
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './Cart.css'; // Import the CSS file
+
+const Cart = () => {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCart(savedCart);
+  }, []);
+
+  return (
+    <div className="cart-container">
+      <h1>Your Cart</h1>
+      <ul>
+        {cart.map((item) => (
+          <li key={item.id}>
+            {item.title} - Quantity: {item.quantity}
+          </li>
+        ))}
+      </ul>
+      <Link to="/checkout" className="link-button">
+        <button>Proceed to Checkout</button>
+      </Link>
+    </div>
+  );
+};
+
+export default Cart;
+Checkout.js
+import React, { useState, useEffect } from 'react';
+import './Checkout.css'; // Import the CSS file
+
+const Checkout = () => {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    // Fetch cart data from localStorage
+    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCart(savedCart);
+  }, []);
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  return (
+    <div className="checkout-container">
+      <h1>Checkout</h1>
+      <h2>Invoice</h2>
+      <ul>
+        {cart.map((item) => (
+          <li key={item.id}>
+            {item.title} - Quantity: {item.quantity}
+          </li>
+        ))}
+      </ul>
+      <button onClick={handlePrint}>Print Invoice</button>
+    </div>
+  );
+};
+
+export default Checkout;
+Header.js
+// Header.js
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './Header.css'; // Import the CSS file
+
+const Header = () => {
+  const [itemCount, setItemCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch cart data from localStorage
+    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    // Calculate the total number of items
+    const totalItems = savedCart.reduce((acc, item) => acc + item.quantity, 0);
+    setItemCount(totalItems);
+  }, []);
+
+  return (
+    <header className="header">
+      <nav>
+        <ul className="nav-list">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/cart">Cart {itemCount > 0 && `(${itemCount})`}</Link></li>
+          <li><Link to="/checkout">Checkout</Link></li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;
